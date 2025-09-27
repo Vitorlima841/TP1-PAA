@@ -1,11 +1,9 @@
-import random, time
+import time
 import statistics
 
 def quickSort(arr, low, high, m, contador):
     if low < high:
-        contador["comparacoes"] += 1
         if high - low > m:
-            contador["comparacoes"] += 1
             pi = partition(arr, low, high, contador)
             quickSort(arr, low, pi - 1, m, contador)
             quickSort(arr, pi + 1, high, m, contador)
@@ -15,13 +13,11 @@ def quickSort(arr, low, high, m, contador):
 def partition(arr, low, high, contador):
     pivot = arr[high]
     i = low - 1
-
     for j in range(low, high):
         contador["comparacoes"] += 1
         if arr[j] < pivot:
             i += 1
             swap(arr, i, j, contador)
-
     swap(arr, i + 1, high, contador)
     return i + 1
 
@@ -42,9 +38,12 @@ def swap(arr, i, j, contador):
     arr[i], arr[j] = arr[j], arr[i]
 
 if __name__ == "__main__":
-    n = 1000
-    arr_base = [random.randint(0, 1000) for _ in range(n)]
-    repeticoes = 30  # número de vezes que cada M será testado
+    # Lê os números do arquivo
+    with open("numeros.txt", "r") as f:
+        arr_base = [int(x) for x in f.read().split()]
+    
+    n = len(arr_base)
+    repeticoes = 30  # número de repetições para cada M
 
     resultados = []
 
@@ -53,7 +52,7 @@ if __name__ == "__main__":
         comparacoes = []
         trocas = []
         for _ in range(repeticoes):
-            arr = arr_base[:]  # cópia do vetor
+            arr = arr_base[:]  # cópia do vetor original
             contador = {"comparacoes": 0, "trocas": 0}
             start = time.time()
             quickSort(arr, 0, n - 1, m, contador)
