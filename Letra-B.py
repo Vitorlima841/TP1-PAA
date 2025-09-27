@@ -1,4 +1,5 @@
 import random, time
+import statistics
 
 def quickSort(arr, low, high, m, contador):
     if low < high:
@@ -42,30 +43,40 @@ def swap(arr, i, j, contador):
 
 if __name__ == "__main__":
     n = 1000
-    arr = [random.randint(0, 1000) for _ in range(n)]
+    arr_base = [random.randint(0, 1000) for _ in range(n)]
+    repeticoes = 30  # número de vezes que cada M será testado
 
     resultados = []
 
-    for m in range(1, 10000):
-        copia = arr[:]
-        contador = {"comparacoes": 0, "trocas": 0}
-        start = time.time()
-        quickSort(copia, 0, n - 1, m, contador)
-        end = time.time()
+    for m in range(1, 100):  # testando M de 1 até 100
+        tempos = []
+        comparacoes = []
+        trocas = []
+        for _ in range(repeticoes):
+            arr = arr_base[:]  # cópia do vetor
+            contador = {"comparacoes": 0, "trocas": 0}
+            start = time.time()
+            quickSort(arr, 0, n - 1, m, contador)
+            end = time.time()
+            tempos.append(end - start)
+            comparacoes.append(contador["comparacoes"])
+            trocas.append(contador["trocas"])
 
-        tempo = round(end - start, 6)
         resultados.append({
             "m": m,
-            "tempo": tempo,
-            "comparacoes": contador["comparacoes"],
-            "trocas": contador["trocas"]
+            "tempo_medio": statistics.mean(tempos),
+            "tempo_dp": statistics.stdev(tempos),
+            "comparacoes_medias": statistics.mean(comparacoes),
+            "trocas_medias": statistics.mean(trocas)
         })
 
-    resultados.sort(key=lambda x: x["tempo"])
+    # Ordena pelo menor tempo médio
+    resultados.sort(key=lambda x: x["tempo_medio"])
 
-    for r in resultados[:3]:
+    # Exibe os 5 melhores valores de M
+    for r in resultados[:5]:
         print(f"M = {r['m']}")
-        print("Tempo:", r["tempo"], "s")
-        print("Comparações:", r["comparacoes"])
-        print("Trocas:", r["trocas"])
+        print(f"Tempo médio: {r['tempo_medio']:.6f} s (± {r['tempo_dp']:.6f})")
+        print(f"Comparações médias: {r['comparacoes_medias']:.2f}")
+        print(f"Trocas médias: {r['trocas_medias']:.2f}")
         print()
