@@ -38,10 +38,57 @@ Gere os vetores de teste:
 python gerador_numeros.py
 
 Alteração da variável arquivo:
+if __name__ == "__main__":
+    arquivo = "nome do vetor que você quer testar.txt"
 
 Execute cada versão do algoritmo:
 python Letra-A.py
 python Letra-B.py
 python Letra-C.py
 
+===Metodologia de Testes===
+
+Cada execução é repetida 30 vezes para maior consistência.
+
+Métricas coletadas:
+
+Tempo médio de execução (em segundos).
+
+Desvio padrão dos tempos (consistência dos resultados).
+
+Número médio de comparações.
+
+Número médio de trocas.
+
+Os resultados são apresentados em tabelas e gráficos no relatório em LaTeX (Overleaf).
+
+===Resultados Esperados===
+
+O QuickSort híbrido deve superar o QuickSort puro em vetores aleatórios e repetidos, especialmente com valores adequados de M.
+
+O QuickSort com mediana-de-três deve reduzir os impactos do pior caso (vetor ordenado e inverso).
+
+A análise final busca o melhor valor de M e a eficiência relativa entre as versões.
+
+===Relatório===
+
+O relatório acadêmico foi produzido em LaTeX (Overleaf) e contém:
+
+Introdução
+
+Referencial teórico (QuickSort, Insertion Sort, análise de complexidade, pior caso)
+
+Metodologia
+
+Resultados e análise crítica
+
+Conclusão
+
+Referências bibliográficas
+
+O link para o relatório em Overleaf será disponibilizado via Canvas.
+
+===Tecnologias Utilizadas===
+
+Python 3.x
 
