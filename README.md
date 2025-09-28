@@ -41,7 +41,7 @@ Alteração da variável arquivo:
 
 if __name__ == "__main__":
 
-    arquivo = "nome do vetor que você quer testar.txt"
+    arquivo = "nome_do_vetor_que_você_quer_testar.txt"
 
 Execute cada versão do algoritmo:
 python Letra-A.py
@@ -95,6 +95,7 @@ O link para o relatório em Overleaf será disponibilizado via Canvas.
 Python 3.13.7
 
 Módulos padrão: time, statistics.
+
 
 
 
