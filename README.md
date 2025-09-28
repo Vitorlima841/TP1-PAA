@@ -6,7 +6,7 @@ QuickSort Híbrido → utiliza Insertion Sort para sub-vetores menores que um li
 
 QuickSort Híbrido com Mediana-de-três → utiliza a técnica da mediana de três elementos para a escolha do pivô.
 
-===Massas de Teste===
+=======Massas de Teste=======
 
 As massas de teste foram geradas no arquivo gerador_numeros.py. Foram considerados os seguintes casos:
 
@@ -20,7 +20,7 @@ vetor_repetidos.txt → vetor com muitos elementos repetidos.
 
 Cada vetor possui 1000 elementos.
 
-===Estrutura do Repositório===
+=======Estrutura do Repositório=======
 
 Letra-A.py → Implementação do QuickSort recursivo.
 
@@ -32,7 +32,7 @@ gerador_numeros.py → gera as massas de teste (.txt).
 
 Arquivos .txt → vetores de entrada para os experimentos.
 
-===Como Executar===
+=======Como Executar=======
 
 Gere os vetores de teste:
 python gerador_numeros.py
@@ -46,7 +46,7 @@ python Letra-A.py
 python Letra-B.py
 python Letra-C.py
 
-===Metodologia de Testes===
+=======Metodologia de Testes=======
 
 Cada execução é repetida 30 vezes para maior consistência.
 
@@ -62,7 +62,7 @@ Número médio de trocas.
 
 Os resultados são apresentados em tabelas e gráficos no relatório em LaTeX (Overleaf).
 
-===Resultados Esperados===
+=======Resultados Esperados=======
 
 O QuickSort híbrido deve superar o QuickSort puro em vetores aleatórios e repetidos, especialmente com valores adequados de M.
 
@@ -70,7 +70,7 @@ O QuickSort com mediana-de-três deve reduzir os impactos do pior caso (vetor or
 
 A análise final busca o melhor valor de M e a eficiência relativa entre as versões.
 
-===Relatório===
+=======Relatório=======
 
 O relatório acadêmico foi produzido em LaTeX (Overleaf) e contém:
 
@@ -88,7 +88,10 @@ Referências bibliográficas
 
 O link para o relatório em Overleaf será disponibilizado via Canvas.
 
-===Tecnologias Utilizadas===
+=======Tecnologias Utilizadas=======
 
-Python 3.x
+Python 3.13.7
+
+Módulos padrão: time, statistics.
+
 
