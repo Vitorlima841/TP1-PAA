@@ -37,8 +37,7 @@ Arquivos .txt → vetores de entrada para os experimentos.
 Gere os vetores de teste:
 python gerador_numeros.py
 
-Alteração da variável arquivo:
-Atente-se no seguinte trecho do código:
+Alteração da variável arquivo:                                                       
 if __name__ == "__main__":
     arquivo = "nome do vetor que você quer testar.txt"
 
@@ -94,6 +93,7 @@ O link para o relatório em Overleaf será disponibilizado via Canvas.
 Python 3.13.7
 
 Módulos padrão: time, statistics.
+
 
 
 
