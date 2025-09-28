@@ -31,3 +31,17 @@ Letra-C.py → QuickSort híbrido com técnica da mediana-de-três.
 gerador_numeros.py → gera as massas de teste (.txt).
 
 Arquivos .txt → vetores de entrada para os experimentos.
+
+===Como Executar===
+
+Gere os vetores de teste:
+python gerador_numeros.py
+
+Alteração da variável arquivo:
+
+Execute cada versão do algoritmo:
+python Letra-A.py
+python Letra-B.py
+python Letra-C.py
+
+
