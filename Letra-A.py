@@ -1,3 +1,8 @@
+import time
+import statistics
+import matplotlib.pyplot as plt
+import pandas as pd
+
 def partition(arr, low, high):
     
     pivot = arr[high]
@@ -24,12 +29,66 @@ def quickSort(arr, low, high):
         quickSort(arr, pi + 1, high)
 
 if __name__ == "__main__":
-    arr = [10, 7, 8, 9, 1, 5]
-    n = len(arr)
+    arquivo = "vetor_repetidos.txt"
 
-    quickSort(arr, 0, n - 1)
-    
-    for val in arr:
-        print(val, end=" ")
+    with open(arquivo, "r") as f:
+        arr_base = [int(x) for x in f.read().split()]
 
-print()
+    n = len(arr_base)
+    repeticoes = 30
+    resultados = []
+
+    for m in range(1, 100):
+        tempos = []
+        comparacoes = []
+        trocas = []
+        for _ in range(repeticoes):
+            arr = arr_base[:]
+            contador = {"comparacoes": 0, "trocas": 0}
+            start = time.time()
+            quickSort(arr, 0, n - 1, m, contador)
+            end = time.time()
+            tempos.append(end - start)
+            comparacoes.append(contador["comparacoes"])
+            trocas.append(contador["trocas"])
+
+        resultados.append({
+            "m": m,
+            "tempo_medio": statistics.mean(tempos),
+            "comparacoes_medias": statistics.mean(comparacoes),
+            "trocas_medias": statistics.mean(trocas)
+        })
+
+    # Ordenar resultados por tempo médio
+    resultados.sort(key=lambda x: x["tempo_medio"])
+
+    # Criar DataFrame para tabela
+    df = pd.DataFrame(resultados)
+    print("\nMelhor resultado: ", arquivo)
+    for r in resultados[:1]:
+        print(f"M = {r['m']}")
+        print(f"Tempo médio: {r['tempo_medio']:.6f} s")
+        print(f"Comparações médias: {r['comparacoes_medias']:.2f}")
+        print(f"Trocas médias: {r['trocas_medias']:.2f}")
+        print()
+
+    # Reordenar resultados por m para os gráficos (para linhas contínuas)
+    resultados.sort(key=lambda x: x["m"])
+
+    ms = [r['m'] for r in resultados]
+    tempos = [r['tempo_medio'] for r in resultados]
+    comparacoes = [r['comparacoes_medias'] for r in resultados]
+    trocas = [r['trocas_medias'] for r in resultados]
+
+    # Gráfico combinado
+    plt.figure(figsize=(12, 8))
+    plt.plot(ms, tempos, marker='o', label='Tempo Médio (s)')
+    plt.plot(ms, [c / max(comparacoes) * max(tempos) for c in comparacoes], marker='x', label='Comparações (normalizado)')
+    plt.plot(ms, [t / max(trocas) * max(tempos) for t in trocas], marker='^', label='Trocas (normalizado)')
+    plt.xlabel('Valor de m')
+    plt.ylabel('Valores (normalizados para comparação)')
+    plt.title('Comparação Normalizada: Tempo, Comparações e Trocas vs m')
+    plt.grid(True)
+    plt.legend()
+    plt.savefig('combinado_vs_m.png')
+    plt.close()

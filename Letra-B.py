@@ -1,5 +1,7 @@
 import time
 import statistics
+import matplotlib.pyplot as plt
+import pandas as pd
 
 def quickSort(arr, low, high, m, contador):
     if low < high:
@@ -38,7 +40,7 @@ def swap(arr, i, j, contador):
     arr[i], arr[j] = arr[j], arr[i]
 
 if __name__ == "__main__":
-    arquivo = "vetor_ordenado.txt"
+    arquivo = "vetor_repetidos.txt"
 
     with open(arquivo, "r") as f:
         arr_base = [int(x) for x in f.read().split()]
@@ -68,14 +70,36 @@ if __name__ == "__main__":
             "trocas_medias": statistics.mean(trocas)
         })
 
+    # Ordenar resultados por tempo médio
     resultados.sort(key=lambda x: x["tempo_medio"])
 
-    print("=" * 60)
-    print(f"Arquivo: {arquivo}")
-    print("=" * 60)
-    for r in resultados[:5]:
+    # Criar DataFrame para tabela
+    df = pd.DataFrame(resultados)
+    print("\nMelhor resultado: ", arquivo)
+    for r in resultados[:1]:
         print(f"M = {r['m']}")
         print(f"Tempo médio: {r['tempo_medio']:.6f} s")
         print(f"Comparações médias: {r['comparacoes_medias']:.2f}")
         print(f"Trocas médias: {r['trocas_medias']:.2f}")
         print()
+
+    # Reordenar resultados por m para os gráficos (para linhas contínuas)
+    resultados.sort(key=lambda x: x["m"])
+
+    ms = [r['m'] for r in resultados]
+    tempos = [r['tempo_medio'] for r in resultados]
+    comparacoes = [r['comparacoes_medias'] for r in resultados]
+    trocas = [r['trocas_medias'] for r in resultados]
+
+    # Gráfico combinado
+    plt.figure(figsize=(12, 8))
+    plt.plot(ms, tempos, marker='o', label='Tempo Médio (s)')
+    plt.plot(ms, [c / max(comparacoes) * max(tempos) for c in comparacoes], marker='x', label='Comparações (normalizado)')
+    plt.plot(ms, [t / max(trocas) * max(tempos) for t in trocas], marker='^', label='Trocas (normalizado)')
+    plt.xlabel('Valor de m')
+    plt.ylabel('Valores (normalizados para comparação)')
+    plt.title('Comparação Normalizada: Tempo, Comparações e Trocas vs m')
+    plt.grid(True)
+    plt.legend()
+    plt.savefig('combinado_vs_m.png')
+    plt.close()
