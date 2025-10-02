@@ -6,8 +6,7 @@ def salvar_vetor(nome_arquivo, vetor):
 
 
 if __name__ == "__main__":
-    #n = 500  # tamanho do vetor
-
+    
     # 1) Vetor para achar M
     Achar_M = [random.randint(0, 10000) for _ in range(1000)]
     salvar_vetor("vetor_Achar_M.txt", Achar_M)
