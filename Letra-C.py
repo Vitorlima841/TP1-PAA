@@ -4,27 +4,33 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 def quickSort(arr, low, high, m, contador):
+    contador["comparacoes"] += 1  # comparação do if low < high
     if low < high:
-        contador["comparacoes"] += 1
+        contador["comparacoes"] += 1  # comparação do if high - low > m
         if high - low > m:
-            contador["comparacoes"] += 1
             pi = partition(arr, low, high, contador)
             quickSort(arr, low, pi - 1, m, contador)
             quickSort(arr, pi + 1, high, m, contador)
         else:
             insertionSort(arr, low, high, contador)
 
-def partition(arr, low, high, contador):
-    numeros_ordenados = sorted([arr[high], arr[low], arr[(low + high) // 2]])
-    pivot = numeros_ordenados[1]
-    i = low - 1
+def mediana(arr, low, high):
+    mid = (low + high) // 2
+    trio = [(arr[low], low), (arr[mid], mid), (arr[high], high)]
+    trio_sorted = sorted(trio, key=lambda x: x[0])
+    return trio_sorted[1][1]  # retorna o índice do elemento mediano
 
+def partition(arr, low, high, contador):
+    pivot_idx = mediana(arr, low, high)
+    swap(arr, pivot_idx, high, contador)  # agora arr[high] é o pivô
+    pivot = arr[high]
+
+    i = low - 1
     for j in range(low, high):
-        contador["comparacoes"] += 1
+        contador["comparacoes"] += 1  # cada comparação arr[j] < pivot
         if arr[j] < pivot:
             i += 1
             swap(arr, i, j, contador)
-
     swap(arr, i + 1, high, contador)
     return i + 1
 
@@ -35,76 +41,58 @@ def insertionSort(arr, low, high, contador):
         while j >= low and arr[j] > key:
             contador["comparacoes"] += 1
             arr[j + 1] = arr[j]
-            contador["trocas"] += 1
             j -= 1
-        contador["comparacoes"] += 1
         arr[j + 1] = key
 
 def swap(arr, i, j, contador):
-    contador["trocas"] += 1
-    arr[i], arr[j] = arr[j], arr[i]
+    # só conta como troca quando efetivamente troca dois índices diferentes
+    if i != j:
+        contador["trocas"] += 1
+        arr[i], arr[j] = arr[j], arr[i]
 
-if __name__ == "__main__":
-    arquivo = "vetor_repetidos.txt"
-
+def executar_quicksort(arquivo, m):
     with open(arquivo, "r") as f:
         arr_base = [int(x) for x in f.read().split()]
 
-    n = len(arr_base)
-    repeticoes = 30
+    arr = arr_base[:]
+    contador = {"comparacoes": 0, "trocas": 0}
+
+    start = time.time()
+    quickSort(arr, 0, len(arr) - 1, m, contador)
+    end = time.time()
+
+    print(f"\nVetor final ({arquivo}):")
+    print(arr)
+
+    return {
+        "arquivo": arquivo,
+        "tempo": end - start,
+        "comparacoes": contador["comparacoes"],
+        "trocas": contador["trocas"]
+    }
+
+
+if __name__ == "__main__":
+    arquivos = {
+        "Ordenado": "vetor_ordenado.txt",
+        "Aleatório": "vetor_aleatorio.txt",
+        "Inverso": "vetor_inverso.txt",
+        "Repetidos": "vetor_repetidos.txt"
+    }
+
     resultados = []
 
-    for m in range(1, 100):
-        tempos = []
-        comparacoes = []
-        trocas = []
-        for _ in range(repeticoes):
-            arr = arr_base[:]
-            contador = {"comparacoes": 0, "trocas": 0}
-            start = time.time()
-            quickSort(arr, 0, n - 1, m, contador)
-            end = time.time()
-            tempos.append(end - start)
-            comparacoes.append(contador["comparacoes"])
-            trocas.append(contador["trocas"])
+    m = 25
 
-        resultados.append({
-            "m": m,
-            "tempo_medio": statistics.mean(tempos),
-            "comparacoes_medias": statistics.mean(comparacoes),
-            "trocas_medias": statistics.mean(trocas)
-        })
+    for nome, arquivo in arquivos.items():
+        resultado = executar_quicksort(arquivo, m)
+        resultado["tipo"] = nome
+        resultados.append(resultado)
 
-    # Ordenar resultados por tempo médio
-    resultados.sort(key=lambda x: x["tempo_medio"])
+    # Organizar resultados em DataFrame
+    df = pd.DataFrame(resultados, columns=["tipo", "tempo", "comparacoes", "trocas"])
 
-    # Criar DataFrame para tabela
-    df = pd.DataFrame(resultados)
-    print("\nMelhor resultado: ", arquivo)
-    for r in resultados[:1]:
-        print(f"M = {r['m']}")
-        print(f"Tempo médio: {r['tempo_medio']:.6f} s")
-        print(f"Comparações médias: {r['comparacoes_medias']:.2f}")
-        print(f"Trocas médias: {r['trocas_medias']:.2f}")
-        print()
-
-    # Reordenar resultados por m para os gráficos (para linhas contínuas)
-    resultados.sort(key=lambda x: x["m"])
-
-    ms = [r['m'] for r in resultados]
-    tempos = [r['tempo_medio'] for r in resultados]
-    comparacoes = [r['comparacoes_medias'] for r in resultados]
-    trocas = [r['trocas_medias'] for r in resultados]
-
-    # Gráfico combinado
-    plt.figure(figsize=(12, 8))
-    plt.plot(ms, tempos, marker='o', label='Tempo Médio (s)')
-    plt.plot(ms, [c / max(comparacoes) * max(tempos) for c in comparacoes], marker='x', label='Comparações (normalizado)')
-    plt.plot(ms, [t / max(trocas) * max(tempos) for t in trocas], marker='^', label='Trocas (normalizado)')
-    plt.xlabel('Valor de m')
-    plt.ylabel('Valores (normalizados para comparação)')
-    plt.title('Comparação Normalizada: Tempo, Comparações e Trocas vs m')
-    plt.grid(True)
-    plt.legend()
-    plt.savefig('combinado_vs_m.png')
-    plt.close()
+    # Plotando gráfico simples
+    df.plot(x="tipo", y=["tempo", "comparacoes", "trocas"], kind="bar", subplots=True, figsize=(10, 8))
+    plt.tight_layout()
+    plt.show()
