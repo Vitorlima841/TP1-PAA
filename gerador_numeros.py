@@ -12,7 +12,7 @@ if __name__ == "__main__":
     salvar_vetor("vetor_Achar_M.txt", Achar_M)
 
     # 2) Vetor aleatório
-    aleatorio = [random.randint(0, 10000) for _ in range(5000)]
+    aleatorio = [random.randint(0, 10000) for _ in range(10000)]
     salvar_vetor("vetor_aleatorio.txt", aleatorio)
 
     # 3) Vetor ordenado em ordem crescente (pior caso)

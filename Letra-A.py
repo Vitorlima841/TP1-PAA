@@ -63,7 +63,7 @@ if __name__ == "__main__":
         resultados.append(resultado)
 
     for resultado in resultados:
-        print(resultado["trocas"])
+        print(resultado)
 
     # Organizar resultados em DataFrame
     df = pd.DataFrame(resultados, columns=["tipo", "tempo", "comparacoes", "trocas"])

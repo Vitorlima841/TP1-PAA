@@ -81,7 +81,7 @@ if __name__ == "__main__":
 
     resultados = []
 
-    m = 25
+    m = 10
 
     for nome, arquivo in arquivos.items():
         resultado = executar_quicksort(arquivo, m)
@@ -89,7 +89,7 @@ if __name__ == "__main__":
         resultados.append(resultado)
 
     for resultado in resultados:
-        print(resultado["trocas"])
+        print(resultado)
 
     # Organizar resultados em DataFrame
     df = pd.DataFrame(resultados, columns=["tipo", "tempo", "comparacoes", "trocas"])
