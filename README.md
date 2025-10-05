@@ -44,31 +44,32 @@ python Letra-C.py
 
 =======Metodologia de Testes=======
 
+
 O desenvolvimento do trabalho seguiu as seguintes etapas:
 
-    • Implementação do Quicksort recursivo tradicional;
+• Implementação do Quicksort recursivo tradicional;
     
-    • Implementação da versão híbrida, interrompendo a recursão para subvetores com menos de M elementos e utilizando Insertion Sort;
+• Implementação da versão híbrida, interrompendo a recursão para subvetores com menos de M elementos e utilizando Insertion Sort;
     
-    • Implementação da versão híbrida com pivô definido pela técnica damediana-de-três;• Definição empírica do valor de M por meio de experimentos com vetores de 1000 elementos;
+• Implementação da versão híbrida com pivô definido pela técnica damediana-de-três;• Definição empírica do valor de M por meio de experimentos com vetores de 1000 elementos;
     
-    • Execução de testes em diferentes massas de dados:
+• Execução de testes em diferentes massas de dados:
     
-        – Vetores aleatórios (10000 elementos);
+– Vetores aleatórios (10000 elementos);
         
-        – Vetores já ordenados (6000 elementos);
+– Vetores já ordenados (6000 elementos);
         
-        – Vetores ordenados de forma inversa (7000 elementos);
+– Vetores ordenados de forma inversa (7000 elementos);
         
-        – Vetores com muitos elementos repetidos (8000 elementos);
+ – Vetores com muitos elementos repetidos (8000 elementos);
         
-    OBS: Vetores ordenados e inversamente ordenados = pior caso.
+OBS: Vetores ordenados e inversamente ordenados = pior caso.
     
-    • O Insertion Sort foi executado 100 vezes, com o M variando de 1 a 100.
+• O Insertion Sort foi executado 100 vezes, com o M variando de 1 a 100.
     
-    • Foram coletadas métricas de tempo de execução, número de comparações e trocas de cada M ;
+• Foram coletadas métricas de tempo de execução, número de comparações e trocas de cada M ;
     
-    • Enfim, o melhor M (com o tempo de execução menor) é escolhido.
+• Enfim, o melhor M (com o tempo de execução menor) é escolhido.
 =======Resultados Esperados=======
 
 O QuickSort híbrido deve superar o QuickSort puro em vetores aleatórios e repetidos, especialmente com valores adequados de M.
