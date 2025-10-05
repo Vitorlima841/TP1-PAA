@@ -70,6 +70,7 @@ OBS: Vetores ordenados e inversamente ordenados = pior caso.
 • Foram coletadas métricas de tempo de execução, número de comparações e trocas de cada M ;
     
 • Enfim, o melhor M (com o tempo de execução menor) é escolhido.
+
 =======Resultados Esperados=======
 
 O QuickSort híbrido deve superar o QuickSort puro em vetores aleatórios e repetidos, especialmente com valores adequados de M.
@@ -101,6 +102,7 @@ O link para o relatório em Overleaf será disponibilizado via Canvas.
 Python 3.13.7
 
 Módulos padrão: time, statistics.
+
 
 
 
