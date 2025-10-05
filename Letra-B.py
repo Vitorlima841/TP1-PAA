@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 def quickSort(arr, low, high, m, contador):
+    contador["comparacoes"] += 1
     if low < high:
         if high - low > m:
             pi = partition(arr, low, high, contador)
@@ -31,13 +32,13 @@ def insertionSort(arr, low, high, contador):
             contador["comparacoes"] += 1
             if arr[j] > key:
                 arr[j + 1] = arr[j]
+                contador["trocas"] += 1
                 j -= 1
             else:
                 break
         arr[j + 1] = key
 
 def swap(arr, i, j, contador):
-    # só conta como troca quando efetivamente troca dois índices diferentes
     if i != j:
         contador["trocas"] += 1
         arr[i], arr[j] = arr[j], arr[i]
@@ -52,9 +53,6 @@ def executar_quicksort(arquivo, m):
     start = time.time()
     quickSort(arr, 0, len(arr) - 1, m, contador)
     end = time.time()
-
-    print(f"\nVetor final ({arquivo}):")
-    print(arr)
 
     return {
         "arquivo": arquivo,
@@ -80,6 +78,9 @@ if __name__ == "__main__":
         resultado = executar_quicksort(arquivo, m)
         resultado["tipo"] = nome
         resultados.append(resultado)
+
+    for resultado in resultados:
+        print(resultado["trocas"])
 
     # Organizar resultados em DataFrame
     df = pd.DataFrame(resultados, columns=["tipo", "tempo", "comparacoes", "trocas"])

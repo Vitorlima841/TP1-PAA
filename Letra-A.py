@@ -1,4 +1,5 @@
 import time
+import statistics
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -10,26 +11,23 @@ def quickSort(arr, low, high, contador):
         quickSort(arr, low, pi - 1, contador)
         quickSort(arr, pi + 1, high, contador)
 
-
 def partition(arr, low, high, contador):
     pivot = arr[high]
     i = low - 1
 
     for j in range(low, high):
+        contador["comparacoes"] += 1  # cada comparação arr[j] < pivot
         if arr[j] < pivot:
             i += 1
             swap(arr, i, j, contador)
-        # comparação redundante que você tinha, mantida
-        contador["comparacoes"] += 1  
-
     swap(arr, i + 1, high, contador)
     return i + 1
 
 
 def swap(arr, i, j, contador):
-    contador["trocas"] += 1
-    arr[i], arr[j] = arr[j], arr[i]
-
+    if i != j:
+        contador["trocas"] += 1
+        arr[i], arr[j] = arr[j], arr[i]
 
 def executar_quicksort(arquivo):
     with open(arquivo, "r") as f:
@@ -59,11 +57,13 @@ if __name__ == "__main__":
     }
 
     resultados = []
-
     for nome, arquivo in arquivos.items():
         resultado = executar_quicksort(arquivo)
         resultado["tipo"] = nome
         resultados.append(resultado)
+
+    for resultado in resultados:
+        print(resultado["trocas"])
 
     # Organizar resultados em DataFrame
     df = pd.DataFrame(resultados, columns=["tipo", "tempo", "comparacoes", "trocas"])
