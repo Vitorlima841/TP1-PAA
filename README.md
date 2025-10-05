@@ -10,15 +10,17 @@ QuickSort Híbrido com Mediana-de-três → utiliza a técnica da mediana de tr�
 
 As massas de teste foram geradas no arquivo gerador_numeros.py. Foram considerados os seguintes casos:
 
-vetor_aleatorio.txt → números em ordem aleatória.
+vetor_Achar_M.txt → utilizado para achar o melhor valor de M (1000 elementos)
 
-vetor_ordenado.txt → números em ordem crescente.
+vetor_aleatorio.txt → números em ordem aleatória (10000 elementos)
 
-vetor_inverso.txt → números em ordem decrescente (pior caso do QuickSort clássico).
+vetor_ordenado.txt → números em ordem crescente, pior caso do QuickSort (6000 elementos)
 
-vetor_repetidos.txt → vetor com muitos elementos repetidos.
+vetor_inverso.txt → números em ordem decrescente, pior caso do QuickSort (7000 elementos)
 
-Cada vetor possui 1000 elementos.
+vetor_repetidos.txt → vetor com muitos elementos repetidos (8000 elementos)
+
+
 
 =======Estrutura do Repositório=======
 
@@ -37,12 +39,6 @@ Arquivos .txt → vetores de entrada para os experimentos.
 Gere os vetores de teste:
 python gerador_numeros.py
 
-Alteração da variável arquivo:     
-
-if __name__ == "__main__":
-
-    arquivo = "nome_do_vetor_que_você_quer_testar.txt"
-
 Execute cada versão do algoritmo:
 python Letra-A.py
 python Letra-B.py
@@ -50,20 +46,19 @@ python Letra-C.py
 
 =======Metodologia de Testes=======
 
-Cada execução é repetida 30 vezes para maior consistência.
-
-Métricas coletadas:
-
-Tempo médio de execução (em segundos).
-
-Desvio padrão dos tempos (consistência dos resultados).
-
-Número médio de comparações.
-
-Número médio de trocas.
-
-Os resultados são apresentados em tabelas e gráficos no relatório em LaTeX (Overleaf).
-
+O desenvolvimento do trabalho seguiu as seguintes etapas:
+    • Implementação do Quicksort recursivo tradicional;
+    • Implementação da versão híbrida, interrompendo a recursão para subvetores com menos de M elementos e utilizando Insertion Sort;
+    • Implementação da versão híbrida com pivô definido pela técnica damediana-de-três;• Definição empírica do valor de M por meio de experimentos com             vetores de 1000 elementos;
+    • Execução de testes em diferentes massas de dados:
+        – Vetores aleatórios (10000 elementos);
+        – Vetores já ordenados (6000 elementos);
+        – Vetores ordenados de forma inversa (7000 elementos);
+        – Vetores com muitos elementos repetidos (8000 elementos);
+    OBS: Vetores ordenados e inversamente ordenados = pior caso.
+    • O Insertion Sort foi executado 100 vezes, com o M variando de 1 a 100.
+    • Foram coletadas métricas de tempo de execução, número de comparações e trocas de cada M ;
+    • Enfim, o melhor M (com o tempo de execução menor) é escolhido.
 =======Resultados Esperados=======
 
 O QuickSort híbrido deve superar o QuickSort puro em vetores aleatórios e repetidos, especialmente com valores adequados de M.
@@ -95,6 +90,7 @@ O link para o relatório em Overleaf será disponibilizado via Canvas.
 Python 3.13.7
 
 Módulos padrão: time, statistics.
+
 
 
 
