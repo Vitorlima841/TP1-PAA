@@ -20,8 +20,6 @@ vetor_inverso.txt → números em ordem decrescente, pior caso do QuickSort (700
 
 vetor_repetidos.txt → vetor com muitos elementos repetidos (8000 elementos)
 
-
-
 =======Estrutura do Repositório=======
 
 Letra-A.py → Implementação do QuickSort recursivo.
@@ -90,6 +88,7 @@ O link para o relatório em Overleaf será disponibilizado via Canvas.
 Python 3.13.7
 
 Módulos padrão: time, statistics.
+
 
 
 
