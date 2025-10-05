@@ -38,8 +38,11 @@ Gere os vetores de teste:
 python gerador_numeros.py
 
 Execute cada versão do algoritmo:
+
 python Letra-A.py
+
 python Letra-B.py
+
 python Letra-C.py
 
 =======Metodologia de Testes=======
@@ -102,6 +105,7 @@ O link para o relatório em Overleaf será disponibilizado via Canvas.
 Python 3.13.7
 
 Módulos padrão: time, statistics.
+
 
 
 
